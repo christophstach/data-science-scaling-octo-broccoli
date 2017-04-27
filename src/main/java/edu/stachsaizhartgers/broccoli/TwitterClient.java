@@ -33,10 +33,7 @@ public class TwitterClient {
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
     authentication = new OAuth1(
-      "vt4z8qbhFzrJVTUxnO8SBtBgT",
-      "dME7XdVC7e3T63lRMdfGiSCP7M8i45LRb99YUO14xFVdm6itX7",
-      "856422916124266496-mbJ5K3Zd76KqYJJxq99RYWJxDEhZ1vc",
-      "YwV1dwcpeJERWs2zpb5O2x4iAZXSqce1aF7heyzjiBJpD"
+      
     );
 
     eventQueue = new LinkedBlockingQueue<>(1000);
