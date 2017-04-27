@@ -1,5 +1,6 @@
 package edu.stachsaizhartgers.broccoli;
 
+import com.google.common.collect.Lists;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
 import com.twitter.hbc.core.Constants;
@@ -12,6 +13,7 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import edu.stachsaizhartgers.broccoli.config.TwitterConfig;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -35,6 +37,11 @@ public class TwitterClient {
     endpoint = new StatusesFilterEndpoint();
     eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
+
+
+    List<String> terms = Lists.newArrayList("Adrian", "Christoph", "Laura");
+    //endpoint.followings(followings);
+    endpoint.trackTerms(terms);
 
 
   }
@@ -83,7 +90,7 @@ public class TwitterClient {
 
     while (!client.isDone()) {
       System.out.println(msgQueue.take());
-      System.out.println(eventQueue.take());
+      //System.out.println(eventQueue.take());
     }
   }
 
