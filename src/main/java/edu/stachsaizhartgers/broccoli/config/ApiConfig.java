@@ -40,4 +40,11 @@ public class ApiConfig {
   public void setTwitter(TwitterConfig twitter) {
     this.twitter = twitter;
   }
+
+  @Override
+  public String toString() {
+    return "ApiConfig{" +
+      "twitter=" + twitter +
+      '}';
+  }
 }

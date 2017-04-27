@@ -61,4 +61,13 @@ public class TwitterConfig {
   public void setAuth(AuthConfig auth) {
     this.auth = auth;
   }
+
+
+  @Override
+  public String toString() {
+    return "TwitterConfig{" +
+      "authType='" + authType + '\'' +
+      ", auth=" + auth +
+      '}';
+  }
 }

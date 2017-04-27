@@ -103,4 +103,14 @@ public class AuthConfig {
   public void setTokenSecret(String tokenSecret) {
     this.tokenSecret = tokenSecret;
   }
+
+  @Override
+  public String toString() {
+    return "AuthConfig{" +
+      "consumerKey='" + consumerKey + '\'' +
+      ", consumerSecret='" + consumerSecret + '\'' +
+      ", token='" + token + '\'' +
+      ", tokenSecret='" + tokenSecret + '\'' +
+      '}';
+  }
 }

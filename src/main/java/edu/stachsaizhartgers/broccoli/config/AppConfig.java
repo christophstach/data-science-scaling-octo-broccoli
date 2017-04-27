@@ -40,4 +40,11 @@ public class AppConfig {
   public void setApi(ApiConfig api) {
     this.api = api;
   }
+
+  @Override
+  public String toString() {
+    return "AppConfig{" +
+      "api=" + api +
+      '}';
+  }
 }

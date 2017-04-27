@@ -33,27 +33,10 @@ public class TwitterClient {
   public TwitterClient() {
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
-    authentication = new OAuth1(
-      config.getAuth().getConsumerKey(),
-      config.getAuth().getConsumerSecret(),
-      config.getAuth().getToken(),
-      config.getAuth().getTokenSecret()
-    );
-
     eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
 
-    ClientBuilder builder = new ClientBuilder()
-      .name("broccoli")
-      .hosts(hosts)
-      .authentication(authentication)
-      .endpoint(endpoint)
-      .processor(new StringDelimitedProcessor(msgQueue))
-      .eventMessageQueue(eventQueue);
 
-
-    client = builder.build();
-    client.connect();
   }
 
   /**
@@ -78,8 +61,29 @@ public class TwitterClient {
    * @throws InterruptedException
    */
   public void listen() throws InterruptedException {
+    authentication = new OAuth1(
+      config.getAuth().getConsumerKey(),
+      config.getAuth().getConsumerSecret(),
+      config.getAuth().getToken(),
+      config.getAuth().getTokenSecret()
+    );
+
+
+    ClientBuilder builder = new ClientBuilder()
+      .name("broccoli")
+      .hosts(hosts)
+      .authentication(authentication)
+      .endpoint(endpoint)
+      .processor(new StringDelimitedProcessor(msgQueue))
+      .eventMessageQueue(eventQueue);
+
+
+    client = builder.build();
+    client.connect();
+
     while (!client.isDone()) {
       System.out.println(msgQueue.take());
+      System.out.println(eventQueue.take());
     }
   }
 
