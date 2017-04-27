@@ -1,0 +1,8 @@
+api:
+  twitter:
+    authType: OAuth
+    oAuth:
+      consumerKey: string
+      consumerSecret: string
+      token: string
+      tokenSecret: string
