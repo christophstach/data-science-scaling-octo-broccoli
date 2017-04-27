@@ -15,9 +15,29 @@ public class ApiConfig {
   }
 
   /**
-   * @param twitter
+   * Setter constructor
+   *
+   * @param twitter value for twitter
    */
   public ApiConfig(TwitterConfig twitter) {
+    this.twitter = twitter;
+  }
+
+  /**
+   * Gets twitter
+   *
+   * @return value of twitter
+   */
+  public TwitterConfig getTwitter() {
+    return twitter;
+  }
+
+  /**
+   * Sets twitter
+   *
+   * @param twitter value for twitter
+   */
+  public void setTwitter(TwitterConfig twitter) {
     this.twitter = twitter;
   }
 }

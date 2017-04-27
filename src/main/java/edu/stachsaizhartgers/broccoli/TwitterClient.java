@@ -9,8 +9,8 @@ import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
 import com.twitter.hbc.core.event.Event;
 import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
-import com.twitter.hbc.httpclient.auth.BasicAuth;
 import com.twitter.hbc.httpclient.auth.OAuth1;
+import edu.stachsaizhartgers.broccoli.config.TwitterConfig;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -21,6 +21,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * A twitter client using hose bird api client
  */
 public class TwitterClient {
+  private TwitterConfig config;
   private Hosts hosts;
   private StatusesFilterEndpoint endpoint;
   private Authentication authentication;
@@ -33,7 +34,10 @@ public class TwitterClient {
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
     authentication = new OAuth1(
-      
+      config.getAuth().getConsumerKey(),
+      config.getAuth().getConsumerSecret(),
+      config.getAuth().getToken(),
+      config.getAuth().getTokenSecret()
     );
 
     eventQueue = new LinkedBlockingQueue<>(1000);
@@ -50,6 +54,24 @@ public class TwitterClient {
 
     client = builder.build();
     client.connect();
+  }
+
+  /**
+   * Gets config
+   *
+   * @return value of config
+   */
+  public TwitterConfig getConfig() {
+    return config;
+  }
+
+  /**
+   * Sets config
+   *
+   * @param config value for config
+   */
+  public void setConfig(TwitterConfig config) {
+    this.config = config;
   }
 
   /**

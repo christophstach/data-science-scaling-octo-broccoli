@@ -23,5 +23,21 @@ public class AppConfig {
     this.api = api;
   }
 
+  /**
+   * Gets api
+   *
+   * @return value of api
+   */
+  public ApiConfig getApi() {
+    return api;
+  }
 
+  /**
+   * Sets api
+   *
+   * @param api value for api
+   */
+  public void setApi(ApiConfig api) {
+    this.api = api;
+  }
 }
