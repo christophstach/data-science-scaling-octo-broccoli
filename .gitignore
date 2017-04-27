@@ -8,4 +8,4 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .idea
-src/main/resources/config.sample.yml
+src/main/resources/config.yml
