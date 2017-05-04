@@ -22,8 +22,6 @@ public class App {
       ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
       AppConfig appConfig = mapper.readValue(new File("src/main/resources/config.yml"), AppConfig.class);
 
-      System.out.println(appConfig.getApi().getTwitter());
-
       TwitterClient twitterClient = new TwitterClient();
       twitterClient.setConfig(appConfig.getApi().getTwitter());
       twitterClient.listen();

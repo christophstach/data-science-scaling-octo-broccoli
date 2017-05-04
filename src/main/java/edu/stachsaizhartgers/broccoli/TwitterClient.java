@@ -1,5 +1,8 @@
 package edu.stachsaizhartgers.broccoli;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.collect.Lists;
 import com.twitter.hbc.ClientBuilder;
 import com.twitter.hbc.core.Client;
@@ -12,7 +15,9 @@ import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import edu.stachsaizhartgers.broccoli.config.TwitterConfig;
+import edu.stachsaizhartgers.broccoli.data.TwitterObject;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,9 +44,10 @@ public class TwitterClient {
     msgQueue = new LinkedBlockingQueue<>(100000);
 
 
-    List<String> terms = Lists.newArrayList("Adrian", "Christoph", "Laura");
+    List<String> terms = Lists.newArrayList("Laila");
     //endpoint.followings(followings);
     endpoint.trackTerms(terms);
+
 
 
   }
@@ -67,7 +73,9 @@ public class TwitterClient {
   /**
    * @throws InterruptedException
    */
-  public void listen() throws InterruptedException {
+  public void listen() throws InterruptedException, IOException {
+    ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+
     authentication = new OAuth1(
       config.getAuth().getConsumerKey(),
       config.getAuth().getConsumerSecret(),
@@ -89,7 +97,11 @@ public class TwitterClient {
     client.connect();
 
     while (!client.isDone()) {
-      System.out.println(msgQueue.take());
+      String s = msgQueue.take();
+
+
+      System.out.println(s);
+      //System.out.println(mapper.readValue(s, TwitterObject.class));
       //System.out.println(eventQueue.take());
     }
   }
