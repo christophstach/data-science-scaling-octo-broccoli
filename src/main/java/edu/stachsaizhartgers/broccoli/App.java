@@ -24,7 +24,7 @@ public class App {
 
       TwitterClient twitterClient = new TwitterClient();
       twitterClient.setConfig(appConfig.getApi().getTwitter());
-      twitterClient.listen();
+      twitterClient.listen().subscribe(new MongoDbSubscriber());
 
       System.out.println("Programm beendet!");
     } catch (Throwable throwable) {
