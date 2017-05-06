@@ -34,7 +34,7 @@
           <archive>
             <manifest>
               <addClasspath>true</addClasspath>
-              <mainClass>edu.stachsaizhartgers.App</mainClass>
+              <mainClass>edu.stachsaizhartgers.broccoli.App</mainClass>
             </manifest>
           </archive>
         </configuration>

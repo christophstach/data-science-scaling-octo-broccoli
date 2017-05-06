@@ -1,6 +1,6 @@
 api:
   twitter:
-    termsFile: src/main/resources/terms.txt
+    termsFile: ./config/terms.txt
     authType: OAuth
     auth:
       consumerKey: string

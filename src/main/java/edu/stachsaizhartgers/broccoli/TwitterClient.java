@@ -15,10 +15,11 @@ import edu.stachsaizhartgers.broccoli.config.TwitterConfig;
 import io.reactivex.Flowable;
 import org.reactivestreams.Subscriber;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -38,22 +39,21 @@ public class TwitterClient {
   private BlockingQueue<String> msgQueue;
   private BlockingQueue<Event> eventQueue;
 
-  public TwitterClient(TwitterConfig config) {
+  public TwitterClient(TwitterConfig config) throws IOException {
     this.config = config;
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
     eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
+    File termsFile = new File(this.getConfig().getTermsFile());
 
-    String termsString = "";
-    try {
-      termsString = new String(Files.readAllBytes(Paths.get(this.getConfig().getTermsFile())));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    String termsString = new String(
+      Files.readAllBytes(
+        Paths.get(termsFile.getPath())
+      )
+    );
 
     String[] termsArray = termsString.split(",");
-
     List<String> terms = Lists.newArrayList(termsArray);
     endpoint.trackTerms(terms);
   }
