@@ -7,21 +7,7 @@ package edu.stachsaizhartgers.broccoli.config;
  */
 public class AppConfig {
   private ApiConfig api;
-
-  /**
-   * Default constructor
-   */
-  public AppConfig() {
-  }
-
-  /**
-   * Setter constructor
-   *
-   * @param api value for api
-   */
-  public AppConfig(ApiConfig api) {
-    this.api = api;
-  }
+  private DatabaseConfig database;
 
   /**
    * Gets api
@@ -33,18 +19,11 @@ public class AppConfig {
   }
 
   /**
-   * Sets api
+   * Gets database
    *
-   * @param api value for api
+   * @return value of database
    */
-  public void setApi(ApiConfig api) {
-    this.api = api;
-  }
-
-  @Override
-  public String toString() {
-    return "AppConfig{" +
-      "api=" + api +
-      '}';
+  public DatabaseConfig getDatabase() {
+    return database;
   }
 }

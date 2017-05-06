@@ -38,28 +38,24 @@ public class TwitterClient {
   private BlockingQueue<String> msgQueue;
   private BlockingQueue<Event> eventQueue;
 
-  public TwitterClient() {
+  public TwitterClient(TwitterConfig config) {
+    this.config = config;
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
     eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
 
-
     String termsString = "";
     try {
-      termsString = new String(Files.readAllBytes(Paths.get("src/main/resources/terms.txt")));
+      termsString = new String(Files.readAllBytes(Paths.get(this.getConfig().getTermsFile())));
     } catch (IOException e) {
       e.printStackTrace();
     }
 
     String[] termsArray = termsString.split(",");
-    System.out.println(Arrays.toString(termsArray));
 
     List<String> terms = Lists.newArrayList(termsArray);
-    //endpoint.followings(followings);
     endpoint.trackTerms(terms);
-
-
   }
 
   /**
@@ -69,15 +65,6 @@ public class TwitterClient {
    */
   public TwitterConfig getConfig() {
     return config;
-  }
-
-  /**
-   * Sets config
-   *
-   * @param config value for config
-   */
-  public void setConfig(TwitterConfig config) {
-    this.config = config;
   }
 
   /**
@@ -103,14 +90,15 @@ public class TwitterClient {
     client = builder.build();
     client.connect();
 
+    System.out.println("Connection to Twitter streaming api established!");
+
 
     Flowable<String> flowable = new Flowable<String>() {
       @Override
       protected void subscribeActual(Subscriber<? super String> subscriber) {
-
         while (!client.isDone()) {
-
           String s = null;
+
           try {
             s = msgQueue.take();
 

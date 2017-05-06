@@ -1,8 +1,15 @@
 api:
   twitter:
+    termsFile: src/main/resources/terms.txt
     authType: OAuth
     auth:
       consumerKey: string
       consumerSecret: string
       token: string
       tokenSecret: string
+database:
+  mongo:
+    host: localhost
+    port: 27017
+    database: broccoli
+    collection: TweetsByTerms

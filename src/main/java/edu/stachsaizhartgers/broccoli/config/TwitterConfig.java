@@ -8,23 +8,7 @@ package edu.stachsaizhartgers.broccoli.config;
 public class TwitterConfig {
   private String authType;
   private AuthConfig auth;
-
-  /**
-   * Default constructor
-   */
-  public TwitterConfig() {
-  }
-
-  /**
-   * Setter constructor
-   *
-   * @param authType value of authType
-   * @param auth     value of auth
-   */
-  public TwitterConfig(String authType, AuthConfig auth) {
-    this.authType = authType;
-    this.auth = auth;
-  }
+  private String termsFile;
 
   /**
    * Gets authType
@@ -33,15 +17,6 @@ public class TwitterConfig {
    */
   public String getAuthType() {
     return authType;
-  }
-
-  /**
-   * Sets authType
-   *
-   * @param authType value for authType
-   */
-  public void setAuthType(String authType) {
-    this.authType = authType;
   }
 
   /**
@@ -54,20 +29,11 @@ public class TwitterConfig {
   }
 
   /**
-   * Sets auth
+   * Gets termsFile
    *
-   * @param auth value for auth
+   * @return value of termsFile
    */
-  public void setAuth(AuthConfig auth) {
-    this.auth = auth;
-  }
-
-
-  @Override
-  public String toString() {
-    return "TwitterConfig{" +
-      "authType='" + authType + '\'' +
-      ", auth=" + auth +
-      '}';
+  public String getTermsFile() {
+    return termsFile;
   }
 }

@@ -22,9 +22,8 @@ public class App {
       ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
       AppConfig appConfig = mapper.readValue(new File("src/main/resources/config.yml"), AppConfig.class);
 
-      TwitterClient twitterClient = new TwitterClient();
-      twitterClient.setConfig(appConfig.getApi().getTwitter());
-      twitterClient.listen().subscribe(new MongoDbSubscriber());
+      TwitterClient twitterClient = new TwitterClient(appConfig.getApi().getTwitter());
+      twitterClient.listen().subscribe(new MongoSubscriber(appConfig.getDatabase().getMongo()));
 
       System.out.println("Programm beendet!");
     } catch (Throwable throwable) {
