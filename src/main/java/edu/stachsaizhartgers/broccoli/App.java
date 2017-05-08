@@ -28,7 +28,7 @@ public class App {
       Flowable<String> flowable = twitterClient.listen();
 
       flowable.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()));
-      
+
       System.out.println("Programm beendet!");
     } catch (NullPointerException e) {
       System.out.println(Arrays.toString(e.getStackTrace()));
