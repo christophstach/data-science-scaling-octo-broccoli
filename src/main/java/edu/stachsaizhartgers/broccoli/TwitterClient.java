@@ -17,7 +17,6 @@ import org.reactivestreams.Subscriber;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -39,6 +38,12 @@ public class TwitterClient {
   private BlockingQueue<String> msgQueue;
   private BlockingQueue<Event> eventQueue;
 
+  /**
+   * The twitter client needs a config object to define API keys and stuff.
+   *
+   * @param config The value of the config
+   * @throws IOException If the terms.txt is not readable
+   */
   public TwitterClient(TwitterConfig config) throws IOException {
     this.config = config;
     hosts = new HttpHosts(Constants.STREAM_HOST);
@@ -68,16 +73,18 @@ public class TwitterClient {
   }
 
   /**
-   * @throws InterruptedException
+   * Listens to the twitter streaming api and returns a flowable. It can be used to define what should happen with the string from the api
+   *
+   * @return A RxJava flowable to subscribe to.
+   * @throws InterruptedException On connection error
    */
-  public Flowable<String> listen() throws InterruptedException, IOException {
+  public Flowable<String> listen() throws InterruptedException {
     authentication = new OAuth1(
       config.getAuth().getConsumerKey(),
       config.getAuth().getConsumerSecret(),
       config.getAuth().getToken(),
       config.getAuth().getTokenSecret()
     );
-
 
     ClientBuilder builder = new ClientBuilder()
       .name("broccoli")
@@ -91,7 +98,6 @@ public class TwitterClient {
     client.connect();
 
     System.out.println("Connection to Twitter streaming api established!");
-
 
     Flowable<String> flowable = new Flowable<String>() {
       @Override
