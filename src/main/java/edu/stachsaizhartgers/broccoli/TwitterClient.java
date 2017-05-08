@@ -12,8 +12,9 @@ import com.twitter.hbc.core.processor.StringDelimitedProcessor;
 import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import edu.stachsaizhartgers.broccoli.config.TwitterConfig;
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import org.reactivestreams.Subscriber;
+import io.reactivex.flowables.ConnectableFlowable;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +47,7 @@ public class TwitterClient {
    */
   public TwitterClient(TwitterConfig config) throws IOException {
     this.config = config;
+
     hosts = new HttpHosts(Constants.STREAM_HOST);
     endpoint = new StatusesFilterEndpoint();
     eventQueue = new LinkedBlockingQueue<>(1000);
@@ -78,7 +80,7 @@ public class TwitterClient {
    * @return A RxJava flowable to subscribe to.
    * @throws InterruptedException On connection error
    */
-  public Flowable<String> listen() throws InterruptedException {
+  public ConnectableFlowable<String> listen() throws InterruptedException {
     authentication = new OAuth1(
       config.getAuth().getConsumerKey(),
       config.getAuth().getConsumerSecret(),
@@ -97,27 +99,23 @@ public class TwitterClient {
     client = builder.build();
     client.connect();
 
-    System.out.println("Connection to Twitter streaming api established!");
+    System.out.println("Connection to Twitter streaming api established.");
 
-    Flowable<String> flowable = new Flowable<String>() {
-      @Override
-      protected void subscribeActual(Subscriber<? super String> subscriber) {
-        while (!client.isDone()) {
-          String s = null;
+    Flowable<String> stream = Flowable.create(subscriber -> new Thread(() -> {
+      System.out.println("Tweet streaming started ...\n");
 
-          try {
-            s = msgQueue.take();
-
-            subscriber.onNext(s);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-
+      while (!client.isDone()) {
+        try {
+          subscriber.onNext(msgQueue.take());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
         }
       }
-    };
 
-    return flowable;
+      subscriber.onComplete();
+    }).start(), BackpressureStrategy.MISSING);
+
+    return stream.publish();
   }
 
   @Override

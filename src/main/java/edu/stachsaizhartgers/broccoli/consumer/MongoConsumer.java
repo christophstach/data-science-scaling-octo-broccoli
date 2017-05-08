@@ -1,4 +1,4 @@
-package edu.stachsaizhartgers.broccoli;
+package edu.stachsaizhartgers.broccoli.consumer;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -29,11 +29,11 @@ public class MongoConsumer implements Consumer<String> {
     database = client.getDatabase(config.getDatabase());
     collection = database.getCollection(config.getCollection());
 
-    System.out.println("Connection to MongoDB established!");
+    System.out.println("Connection to MongoDB established.");
   }
 
   /**
-   * Difines what should happen with the string from the twitter streaming api.
+   * Defines what should happen with the string from the twitter streaming api.
    * Here the string will be simply parse to a JSON object and put into the MongoDB
    *
    * @param s The JSON encoded string
@@ -42,6 +42,5 @@ public class MongoConsumer implements Consumer<String> {
   @Override
   public void accept(String s) throws Exception {
     collection.insertOne(Document.parse(s));
-    System.out.println(".");
   }
 }

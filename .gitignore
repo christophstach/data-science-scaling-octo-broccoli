@@ -10,3 +10,5 @@ buildNumber.properties
 .idea
 src/main/resources/config.yml
 config/config.yml
+data/
+!data/.gitkeep

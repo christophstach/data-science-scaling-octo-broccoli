@@ -13,3 +13,4 @@ database:
     port: 27017
     database: broccoli
     collection: TweetsByTerms
+  file: ./data/TweetsByTerms.txt

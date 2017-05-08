@@ -7,6 +7,7 @@ package edu.stachsaizhartgers.broccoli.config;
  */
 public class DatabaseConfig {
   private MongoConfig mongo;
+  private String file;
 
   /**
    * Gets mongo
@@ -15,5 +16,14 @@ public class DatabaseConfig {
    */
   public MongoConfig getMongo() {
     return mongo;
+  }
+
+  /**
+   * Gets file
+   *
+   * @return value of file
+   */
+  public String getFile() {
+    return file;
   }
 }

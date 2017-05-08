@@ -3,7 +3,11 @@ package edu.stachsaizhartgers.broccoli;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import edu.stachsaizhartgers.broccoli.config.AppConfig;
+import edu.stachsaizhartgers.broccoli.consumer.ConsoleLogConsumer;
+import edu.stachsaizhartgers.broccoli.consumer.FileConsumer;
+import edu.stachsaizhartgers.broccoli.consumer.MongoConsumer;
 import io.reactivex.Flowable;
+import io.reactivex.flowables.ConnectableFlowable;
 
 import java.io.File;
 import java.util.Arrays;
@@ -25,11 +29,17 @@ public class App {
       AppConfig appConfig = mapper.readValue(new File("./config/config.yml"), AppConfig.class);
 
       TwitterClient twitterClient = new TwitterClient(appConfig.getApi().getTwitter());
-      Flowable<String> flowable = twitterClient.listen();
+      ConnectableFlowable<String> stream = twitterClient.listen();
 
-      flowable.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()));
+      System.out.println("MongoConsumer is now subscribed to twitter api.");
+      stream.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()));
+      System.out.println("ConsoleLogConsumer is now subscribed to twitter api.");
+      stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()));
+      System.out.println("FileConsumer is now subscribed to twitter api.");
+      stream.subscribe(new FileConsumer(appConfig.getDatabase().getFile()));
 
-      System.out.println("Programm beendet!");
+      System.out.println();
+      stream.connect();
     } catch (NullPointerException e) {
       System.out.println(Arrays.toString(e.getStackTrace()));
 
