@@ -102,7 +102,7 @@ public class TwitterClient {
     System.out.println("Connection to Twitter streaming api established.");
 
     Flowable<String> stream = Flowable.create(subscriber -> new Thread(() -> {
-      System.out.println("Tweet streaming started ...\n");
+      System.out.println("Threaded tweet streaming started ...\n");
 
       while (!client.isDone()) {
         try {
