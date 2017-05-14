@@ -1,5 +1,10 @@
 api:
   twitter:
+    # Possible values for filters are location, terms so far
+    filters: [location, terms]
+    # [Southwest longitude, Southwest latitude, Northeast longitude, Northeast latidude]
+    # That are the bounding box coordinates of Berlin
+    location: [13.118362, 52.38482, 13.729477, 52.718827]
     termsFile: ./config/terms.txt
     authType: OAuth
     auth:

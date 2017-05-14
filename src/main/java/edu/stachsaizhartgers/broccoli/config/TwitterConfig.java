@@ -1,5 +1,7 @@
 package edu.stachsaizhartgers.broccoli.config;
 
+import java.util.List;
+
 /**
  * Created by Christoph Stach on 4/27/17.
  * <p>
@@ -9,6 +11,8 @@ public class TwitterConfig {
   private String authType;
   private AuthConfig auth;
   private String termsFile;
+  private List<Float> location;
+  private List<String> filters;
 
   /**
    * Gets authType
@@ -35,5 +39,23 @@ public class TwitterConfig {
    */
   public String getTermsFile() {
     return termsFile;
+  }
+
+  /**
+   * Gets location
+   *
+   * @return value of location
+   */
+  public List<Float> getLocation() {
+    return location;
+  }
+
+  /**
+   * Gets filters
+   *
+   * @return value of filters
+   */
+  public List<String> getFilters() {
+    return filters;
   }
 }

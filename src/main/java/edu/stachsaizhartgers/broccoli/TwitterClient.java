@@ -6,6 +6,7 @@ import com.twitter.hbc.core.Client;
 import com.twitter.hbc.core.Constants;
 import com.twitter.hbc.core.Hosts;
 import com.twitter.hbc.core.HttpHosts;
+import com.twitter.hbc.core.endpoint.Location;
 import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
 import com.twitter.hbc.core.event.Event;
 import com.twitter.hbc.core.processor.StringDelimitedProcessor;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -39,6 +41,8 @@ public class TwitterClient {
   private BlockingQueue<String> msgQueue;
   private BlockingQueue<Event> eventQueue;
 
+
+
   /**
    * The twitter client needs a config object to define API keys and stuff.
    *
@@ -52,17 +56,41 @@ public class TwitterClient {
     endpoint = new StatusesFilterEndpoint();
     eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
-    File termsFile = new File(this.getConfig().getTermsFile());
 
-    String termsString = new String(
-      Files.readAllBytes(
-        Paths.get(termsFile.getPath())
-      )
-    );
+    // Activates the terms filter. The filter terms are read from a file defined in the config
+    if(config.getFilters().contains("terms")) {
+      File termsFile = new File(this.getConfig().getTermsFile());
 
-    String[] termsArray = termsString.split(",");
-    List<String> terms = Lists.newArrayList(termsArray);
-    endpoint.trackTerms(terms);
+      String termsString = new String(
+        Files.readAllBytes(
+          Paths.get(termsFile.getPath())
+        )
+      );
+
+      String[] termsArray = termsString.split(",");
+      List<String> terms = Lists.newArrayList(termsArray);
+
+      endpoint.trackTerms(terms);
+    }
+
+    // Activates the location filter. The location bounding box is read from the config
+    if(config.getFilters().contains("location")) {
+      final int SOUTH_WEST_LONGITUDE = 0;
+      final int SOUTH_WEST_LATITUDE = 1;
+      final int NORTH_EAST_LONGITUDE = 2;
+      final int NORTH_EAST_LATITUDE = 3;
+      List<Float> l = config.getLocation();
+
+      Location location = new Location(
+        new Location.Coordinate(l.get(SOUTH_WEST_LONGITUDE), l.get(SOUTH_WEST_LATITUDE)),
+        new Location.Coordinate(l.get(NORTH_EAST_LONGITUDE), l.get(NORTH_EAST_LATITUDE))
+      );
+
+      ArrayList<Location> locations = new ArrayList<>();
+      locations.add(location);
+
+      endpoint.locations(locations);
+    }
   }
 
   /**
