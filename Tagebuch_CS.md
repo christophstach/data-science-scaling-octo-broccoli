@@ -25,7 +25,7 @@ Damit können wir uns später besser einen Überblick verschaffen und gegebenfal
 - **11.04**: Testen der NLP Library http://www.spacy.io/
 - **11.04**: Erfolreiche Extrahierung von ***Named Entities*** aus Tweets
 - **14.05**: Interessante Studie, die ähnlich unserer ist: http://www.ling.uni-potsdam.de/~scheffler/twitter/
-- **TODO**: Consumer sollten aktivierbar und deaktivierbar per config.yml sein
+- **15.05**: Consumer sind jetzt per config.yml aktivierbar
 
 
 ### Mögliche Themen, Unterthemen und Themen Inhalte

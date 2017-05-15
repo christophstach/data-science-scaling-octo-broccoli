@@ -19,3 +19,4 @@ database:
     database: broccoli
     collection: TweetsByTerms
   file: ./data/TweetsByTerms.txt
+consumer: [MongoConsumer, ConsoleLogConsumer, FileConsumer]

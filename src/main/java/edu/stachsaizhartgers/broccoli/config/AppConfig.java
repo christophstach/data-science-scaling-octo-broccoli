@@ -1,5 +1,7 @@
 package edu.stachsaizhartgers.broccoli.config;
 
+import java.util.List;
+
 /**
  * Created by Christoph Stach on 4/27/17.
  * <p>
@@ -8,6 +10,7 @@ package edu.stachsaizhartgers.broccoli.config;
 public class AppConfig {
   private ApiConfig api;
   private DatabaseConfig database;
+  private List<String> consumer;
 
   /**
    * Gets api
@@ -25,5 +28,14 @@ public class AppConfig {
    */
   public DatabaseConfig getDatabase() {
     return database;
+  }
+
+  /**
+   * Gets consumer
+   *
+   * @return value of consumer
+   */
+  public List<String> getConsumer() {
+    return consumer;
   }
 }

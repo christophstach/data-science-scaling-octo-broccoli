@@ -6,7 +6,6 @@ import edu.stachsaizhartgers.broccoli.config.AppConfig;
 import edu.stachsaizhartgers.broccoli.consumer.ConsoleLogConsumer;
 import edu.stachsaizhartgers.broccoli.consumer.FileConsumer;
 import edu.stachsaizhartgers.broccoli.consumer.MongoConsumer;
-import io.reactivex.Flowable;
 import io.reactivex.flowables.ConnectableFlowable;
 
 import java.io.File;
@@ -27,16 +26,20 @@ public class App {
     try {
       ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
       AppConfig appConfig = mapper.readValue(new File("./config/config.yml"), AppConfig.class);
-
       TwitterClient twitterClient = new TwitterClient(appConfig.getApi().getTwitter());
       ConnectableFlowable<String> stream = twitterClient.listen();
 
-      System.out.println("MongoConsumer is now subscribed to twitter api.");
-      stream.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()));
-      System.out.println("ConsoleLogConsumer is now subscribed to twitter api.");
-      stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()));
-      System.out.println("FileConsumer is now subscribed to twitter api.");
-      stream.subscribe(new FileConsumer(appConfig.getDatabase().getFile()));
+      for (String consumer : appConfig.getConsumer()) {
+        if (consumer.equals("ConsoleLogConsumer")) {
+          stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()));
+        } else if (consumer.equals("FileConsumer")) {
+          stream.subscribe(new FileConsumer(appConfig.getDatabase().getFile()));
+        } else if (consumer.equals("MongoConsumer")) {
+          stream.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()));
+        }
+
+        System.out.println(consumer + " is now subscribed to twitter api.");
+      }
 
       System.out.println();
       stream.connect();
