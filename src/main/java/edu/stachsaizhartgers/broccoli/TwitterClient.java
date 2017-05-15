@@ -41,8 +41,6 @@ public class TwitterClient {
   private BlockingQueue<String> msgQueue;
   private BlockingQueue<Event> eventQueue;
 
-
-
   /**
    * The twitter client needs a config object to define API keys and stuff.
    *
@@ -58,7 +56,7 @@ public class TwitterClient {
     msgQueue = new LinkedBlockingQueue<>(100000);
 
     // Activates the terms filter. The filter terms are read from a file defined in the config
-    if(config.getFilters().contains("terms")) {
+    if (config.getFilters().contains("terms")) {
       File termsFile = new File(this.getConfig().getTermsFile());
 
       String termsString = new String(
@@ -67,14 +65,14 @@ public class TwitterClient {
         )
       );
 
-      String[] termsArray = termsString.split(",");
+      String[] termsArray = termsString.split("\n");
       List<String> terms = Lists.newArrayList(termsArray);
 
       endpoint.trackTerms(terms);
     }
 
     // Activates the location filter. The location bounding box is read from the config
-    if(config.getFilters().contains("location")) {
+    if (config.getFilters().contains("location")) {
       final int SOUTH_WEST_LONGITUDE = 0;
       final int SOUTH_WEST_LATITUDE = 1;
       final int NORTH_EAST_LONGITUDE = 2;

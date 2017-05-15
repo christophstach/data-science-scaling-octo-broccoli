@@ -1,2 +1,9 @@
-NPD,AfD,Nationaldemokratischen Partei Deutschlands,Alternative für Deutschland,
-Frauke Petry,Jörg Meuthen,Alexander Gauland,Beatrix von Storch,Albrecht Glaser
+NPD
+AfD
+Nationaldemokratischen Partei Deutschlands
+Alternative für Deutschland
+Frauke Petry
+Jörg Meuthen
+Alexander Gauland
+Beatrix von Storch
+Albrecht Glaser
