@@ -11,7 +11,7 @@ public class TwitterConfig {
   private String authType;
   private AuthConfig auth;
   private String termsFile;
-  private List<Float> location;
+  private float[][] locations;
   private List<String> filters;
 
   /**
@@ -42,12 +42,12 @@ public class TwitterConfig {
   }
 
   /**
-   * Gets location
+   * Gets locations
    *
-   * @return value of location
+   * @return value of locations
    */
-  public List<Float> getLocation() {
-    return location;
+  public float[][] getLocations() {
+    return locations;
   }
 
   /**

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Stream;
 
 /**
  * Created by Christoph Stach on 4/27/17.
@@ -72,15 +73,13 @@ public class TwitterClient {
       final int SOUTH_WEST_LATITUDE = 1;
       final int NORTH_EAST_LONGITUDE = 2;
       final int NORTH_EAST_LATITUDE = 3;
-      List<Float> l = config.getLocation();
-
-      Location location = new Location(
-        new Location.Coordinate(l.get(SOUTH_WEST_LONGITUDE), l.get(SOUTH_WEST_LATITUDE)),
-        new Location.Coordinate(l.get(NORTH_EAST_LONGITUDE), l.get(NORTH_EAST_LATITUDE))
-      );
-
+      float[][] rawLocations = config.getLocations();
       ArrayList<Location> locations = new ArrayList<>();
-      locations.add(location);
+
+      Stream.of(rawLocations).forEach((location) -> locations.add(new Location(
+        new Location.Coordinate(location[SOUTH_WEST_LONGITUDE], location[SOUTH_WEST_LATITUDE]),
+        new Location.Coordinate(location[NORTH_EAST_LONGITUDE], location[NORTH_EAST_LATITUDE])
+      )));
 
       endpoint.locations(locations);
     }

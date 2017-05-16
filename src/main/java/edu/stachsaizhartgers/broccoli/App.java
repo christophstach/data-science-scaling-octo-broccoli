@@ -48,10 +48,11 @@ public class App {
       System.out.println();
       stream.connect();
     } catch (NullPointerException e) {
-      System.out.println(e.getMessage());
-      System.out.println(Arrays.toString(e.getStackTrace()));
-    } catch (Throwable throwable) {
-      System.out.println(throwable.getMessage());
+      System.out.println(e + ": " + e.getMessage());
+      Stream.of(e.getStackTrace()).forEach(System.out::println);
+    } catch (Throwable e) {
+      System.out.println(e + ": " + e.getMessage());
+      Stream.of(e.getStackTrace()).forEach(System.out::println);
     }
   }
 
