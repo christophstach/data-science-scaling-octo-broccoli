@@ -10,7 +10,8 @@ Damit können wir uns später besser einen Überblick verschaffen und gegebenfal
 - **08.05**: Consumer können sich jetzt auf mit dem Twitter Client verbinden und auf auftretende Tweets reagieren
 - **08.05**: Implementierung eines MongoDB Consumers, mit MongoDB lassen sich einfach JSON Objekte speichern und bei bedarf durchsuchen. Die Twitter API sendet Tweets im JSON Format, von daher erweist sich MongoDB als idealer initialer Datenspeicher.
 - **14.05**: Implementierung für den Locationfilter
-- **14.05**: Erstellung eines Shellscripts um den Twitter Client auf dem Server im Hintergrund laufen zu lassen 
+- **14.05**: Erstellung eines Shellscripts um den Twitter Client auf dem Server im Hintergrund laufen zu lassen
+- **16.05**: Verbesserung des Twitter Clients und Unterschützung für mehrfache Locationfilter
 
 ## Server
 
