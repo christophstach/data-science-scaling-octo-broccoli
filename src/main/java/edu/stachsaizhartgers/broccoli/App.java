@@ -32,22 +32,26 @@ public class App {
       ConnectableFlowable<String> stream = twitterClient.listen();
 
       for (String consumer : appConfig.getConsumer()) {
-        if (consumer.equals("ConsoleLogSubscriber")) {
-          stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()), App::error);
-        } else if (consumer.equals("FileConsumer")) {
-          stream.subscribe(new FileConsumer(appConfig.getDatabase().getFile()), App::error);
-        } else if (consumer.equals("MongoConsumer")) {
-          stream.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()), App::error);
+        switch (consumer) {
+          case "ConsoleLogSubscriber":
+            stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()), App::error);
+            break;
+          case "FileConsumer":
+            stream.subscribe(new FileConsumer(appConfig.getDatabase().getFile()), App::error);
+            break;
+          case "MongoConsumer":
+            stream.subscribe(new MongoConsumer(appConfig.getDatabase().getMongo()), App::error);
+            break;
         }
       }
 
       System.out.println();
       stream.connect();
     } catch (NullPointerException e) {
-      System.out.println(e);
+      System.out.println(e.getMessage());
       System.out.println(Arrays.toString(e.getStackTrace()));
     } catch (Throwable throwable) {
-      System.out.println(throwable);
+      System.out.println(throwable.getMessage());
     }
   }
 
@@ -58,6 +62,6 @@ public class App {
    */
   private static void error(Throwable e) {
     System.out.println(e + ": " + e.getMessage());
-    Stream.of(e.getStackTrace()).forEach((stackTraceElement) -> System.out.println(stackTraceElement));
+    Stream.of(e.getStackTrace()).forEach(System.out::println);
   }
 }
