@@ -26,17 +26,18 @@ public class ConsoleLogConsumer implements Consumer<String> {
 
   @Override
   public void accept(String s) {
-
     try {
       JsonNode json = mapper.readTree(s);
-      System.out.println(
-        "[" + json.get("created_at").asText() + "]: "
-        + json.get("text").asText().replace("\n", "")
-      );
+
+      if(json.has("created_at")) {
+        System.out.println(
+          "[" + json.get("created_at").asText() + "]: "
+            + json.get("text").asText().replace("\n", "")
+        );
+      }
     } catch (IOException e) {
       System.out.println("Couldn't parse tweet JSON.");
       e.printStackTrace();
     }
-
   }
 }

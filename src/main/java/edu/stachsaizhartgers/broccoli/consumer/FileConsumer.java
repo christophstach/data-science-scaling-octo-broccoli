@@ -33,6 +33,8 @@ public class FileConsumer implements Consumer<String> {
 
   @Override
   public void accept(String s) throws Exception {
-    this.fileWriter.append(s);
+    if(s.matches("(.*)created_at(.*)")) {
+      this.fileWriter.append(s);
+    }
   }
 }

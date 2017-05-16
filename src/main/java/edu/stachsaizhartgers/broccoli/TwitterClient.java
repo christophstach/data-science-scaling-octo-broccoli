@@ -33,13 +33,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class TwitterClient {
   private TwitterConfig config;
-  private Hosts hosts;
-  private StatusesFilterEndpoint endpoint;
-  private Authentication authentication;
   private Client client;
-
   private BlockingQueue<String> msgQueue;
-  private BlockingQueue<Event> eventQueue;
 
   /**
    * The twitter client needs a config object to define API keys and stuff.
@@ -50,9 +45,9 @@ public class TwitterClient {
   public TwitterClient(TwitterConfig config) throws IOException {
     this.config = config;
 
-    hosts = new HttpHosts(Constants.STREAM_HOST);
-    endpoint = new StatusesFilterEndpoint();
-    eventQueue = new LinkedBlockingQueue<>(1000);
+    Hosts hosts = new HttpHosts(Constants.STREAM_HOST);
+    StatusesFilterEndpoint endpoint = new StatusesFilterEndpoint();
+    BlockingQueue<Event> eventQueue = new LinkedBlockingQueue<>(1000);
     msgQueue = new LinkedBlockingQueue<>(100000);
 
     // Activates the terms filter. The filter terms are read from a file defined in the config
@@ -89,6 +84,22 @@ public class TwitterClient {
 
       endpoint.locations(locations);
     }
+
+    Authentication authentication = new OAuth1(
+      config.getAuth().getConsumerKey(),
+      config.getAuth().getConsumerSecret(),
+      config.getAuth().getToken(),
+      config.getAuth().getTokenSecret()
+    );
+
+    ClientBuilder builder = new ClientBuilder()
+      .hosts(hosts)
+      .authentication(authentication)
+      .endpoint(endpoint)
+      .processor(new StringDelimitedProcessor(msgQueue))
+      .eventMessageQueue(eventQueue);
+
+    client = builder.build();
   }
 
   /**
@@ -107,24 +118,7 @@ public class TwitterClient {
    * @throws InterruptedException On connection error
    */
   public ConnectableFlowable<String> listen() throws InterruptedException {
-    authentication = new OAuth1(
-      config.getAuth().getConsumerKey(),
-      config.getAuth().getConsumerSecret(),
-      config.getAuth().getToken(),
-      config.getAuth().getTokenSecret()
-    );
-
-    ClientBuilder builder = new ClientBuilder()
-      .name("broccoli")
-      .hosts(hosts)
-      .authentication(authentication)
-      .endpoint(endpoint)
-      .processor(new StringDelimitedProcessor(msgQueue))
-      .eventMessageQueue(eventQueue);
-
-    client = builder.build();
     client.connect();
-
     System.out.println("Connection to Twitter streaming api established.");
 
     Flowable<String> stream = Flowable.create(subscriber -> new Thread(() -> {

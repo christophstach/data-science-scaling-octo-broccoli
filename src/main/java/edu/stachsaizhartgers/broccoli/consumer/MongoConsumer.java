@@ -41,6 +41,8 @@ public class MongoConsumer implements Consumer<String> {
    */
   @Override
   public void accept(String s) throws Exception {
-    collection.insertOne(Document.parse(s));
+    if(s.matches("(.*)created_at(.*)")) {
+      collection.insertOne(Document.parse(s));
+    }
   }
 }

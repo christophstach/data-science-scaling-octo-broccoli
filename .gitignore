@@ -8,7 +8,7 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 .idea
-src/main/resources/config.yml
-config/config.yml
 data/
+config/
+!config/config.sample.yml
 !data/.gitkeep
