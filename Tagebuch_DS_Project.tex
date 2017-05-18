@@ -120,4 +120,44 @@ eigenes Interesse?, Zufall?, .... ) \\
 
 \chapter{Diskussion}
 
+\chapter{Tagebücher}
+
+\section{Christoph Stach}
+
+Ich fasse hier mal zusammen was ich bisher so gemacht habe.
+Damit können wir uns später besser einen Überblick verschaffen und gegebenfalls eine Timeline erstellen.
+
+\subsection*{Recherche}
+
+
+\begin{itemize}
+  \item \textbf{27.04.2017:} Wo bekommen wir die Daten her?
+  \item \textbf{27.04.2017:} Twitter Streaming API streamt Tweets sobald Sie getweeted werden zu einem Client
+  \item \textbf{27.04.2017:} Entscheidung: Hosebird Client (hbc), weil offiziell von Twitter entwickelt
+  \item \textbf{08.04.2017:} Wie kann man Text analysieren? Ggf. NLP Techniken anwenden
+  \item \textbf{11.04.2017:} Testen der NLP Library http://www.spacy.io/
+  \item \textbf{11.04.2017:} Erfolreiche Extrahierung von \textit{Named Entities} mit SpaCy aus Tweets
+  \item \textbf{14.05.2017:} Interessante Studie, die ähnlich unserer ist: http://www.ling.uni-potsdam.de/~scheffler/twitter/
+  \item \textbf{15.05.2017:} Consumer sind jetzt per config.yml aktivierbar  
+\end{itemize}
+
+
+
+\subsection*{DataMiner}
+
+\begin{itemize}
+  \item \textbf{27.04.2017:} Erste Erstellung eines lauffähigen Prototypens welcher sich auf die Twitter Streaming API verbindet und Tweets empfängt
+  \item \textbf{08.05.2017:} Consumer können sich jetzt auf mit dem Twitter Client verbinden und auf auftretende Tweets reagieren
+  \item \textbf{08.05.2017:} Implementierung eines MongoDB Consumers, mit MongoDB lassen sich einfach JSON Objekte speichern und bei bedarf durchsuchen. Die Twitter API sendet Tweets im JSON Format, von daher erweist sich MongoDB als idealer initialer Datenspeicher.
+  \item \textbf{14.05.2017:} Implementierung für den Locationfilter
+  \item \textbf{14.05.2017:} Erstellung eines Shellscripts um den Twitter Client auf dem Server im Hintergrund laufen zu lassen
+  \item \textbf{16.05.2017:} Verbesserung des Twitter Clients und Unterschützung für mehrfache Locationfilter
+\end{itemize}
+
+\subsection*{Server}
+
+\begin{itemize}
+  \item \textbf{14.05.2017:} Upload des Twitter Clients auf den Server um einen Testlauf zu starten (Tweets in Berlin)
+\end{itemize}
+
 \end{document}

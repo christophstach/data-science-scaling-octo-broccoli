@@ -12,3 +12,13 @@ data/
 config/
 !config/config.sample.yml
 !data/.gitkeep
+.classpath
+.project
+.settings
+*.fls
+*.log
+*.synctex.gz
+*.pdf
+*.fdb_latexmk
+*.aux
+*.toc

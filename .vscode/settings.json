@@ -1,0 +1,28 @@
+{
+  "files.exclude": {
+    "target/": "explorerExcludedFiles",
+    "pom.xml.tag": "explorerExcludedFiles",
+    "pom.xml.releaseBackup": "explorerExcludedFiles",
+    "pom.xml.versionsBackup": "explorerExcludedFiles",
+    "pom.xml.next": "explorerExcludedFiles",
+    "release.properties": "explorerExcludedFiles",
+    "dependency-reduced-pom.xml": "explorerExcludedFiles",
+    "buildNumber.properties": "explorerExcludedFiles",
+    ".mvn/timing.properties": "explorerExcludedFiles",
+    ".idea": "explorerExcludedFiles",
+    "data/": "explorerExcludedFiles",
+    "config/": "explorerExcludedFiles",
+    "!config/config.sample.yml": "explorerExcludedFiles",
+    "!data/.gitkeep": "explorerExcludedFiles",
+    ".classpath": "explorerExcludedFiles",
+    ".project": "explorerExcludedFiles",
+    ".settings": "explorerExcludedFiles",
+    "*.fls": "explorerExcludedFiles",
+    "*.log": "explorerExcludedFiles",
+    "*.synctex.gz": "explorerExcludedFiles",
+    "*.pdf": "explorerExcludedFiles",
+    "*.fdb_latexmk": "explorerExcludedFiles",
+    "*.aux": "explorerExcludedFiles",
+    "*.toc": "explorerExcludedFiles"
+  }
+}
