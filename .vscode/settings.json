@@ -23,6 +23,7 @@
     "*.pdf": true,
     "*.fdb_latexmk": true,
     "*.aux": true,
-    "*.toc": true
+    "*.toc": true,
+    "*.pyg": true
   }
 }
