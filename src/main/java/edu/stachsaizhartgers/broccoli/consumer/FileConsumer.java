@@ -29,6 +29,8 @@ public class FileConsumer implements Consumer<String> {
     if (!file.exists()) {
       file.createNewFile();
     }
+
+    System.out.println("Created " + this.getClass().getName() + "...");
   }
 
   @Override

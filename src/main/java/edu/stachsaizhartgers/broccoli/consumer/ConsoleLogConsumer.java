@@ -22,6 +22,7 @@ public class ConsoleLogConsumer implements Consumer<String> {
    */
   public ConsoleLogConsumer(ObjectMapper mapper) {
     this.mapper = mapper;
+    System.out.println("Created " + this.getClass().getName() + "...");
   }
 
   @Override

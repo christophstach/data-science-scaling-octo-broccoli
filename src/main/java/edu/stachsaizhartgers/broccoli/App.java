@@ -33,7 +33,7 @@ public class App {
 
       for (String consumer : appConfig.getConsumer()) {
         switch (consumer) {
-          case "ConsoleLogSubscriber":
+          case "ConsoleLogConsumer":
             stream.subscribe(new ConsoleLogConsumer(new ObjectMapper()), App::error);
             break;
           case "FileConsumer":

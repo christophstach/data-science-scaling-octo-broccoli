@@ -30,6 +30,7 @@ public class MongoConsumer implements Consumer<String> {
     collection = database.getCollection(config.getCollection());
 
     System.out.println("Connection to MongoDB established.");
+    System.out.println("Created " + this.getClass().getName() + "...");
   }
 
   /**
