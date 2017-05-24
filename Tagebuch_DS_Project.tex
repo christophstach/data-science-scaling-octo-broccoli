@@ -166,14 +166,15 @@ eigenes Interesse?, Zufall?, .... ) \\
 
 \section{MongoDB - Praktische Queries}
 
+\subsection{Vorkommen aller Sprachen}
 \begin{lstlisting}[language=JavaScript]
-# Alle Sprachen
-
 db.getCollection('tweetsGermanStopWords').aggregate([
     { 
         $group: { 
             _id: '$lang',
-            count: {$sum: 1}
+            occurrences: {
+                $sum: 1
+            }
         }
     },
     {
@@ -181,7 +182,34 @@ db.getCollection('tweetsGermanStopWords').aggregate([
             count: -1
         }
     }
-]);
+])
+\end{lstlisting}
+
+\subsection{Vorkommen aller Hashtags}
+\begin{lstlisting}[language=JavaScript]
+db.getCollection('tweetsBerlinGeo').aggregate([  
+    { 
+        $unwind: {
+            path: "$entities.hashtags"
+        }
+    },
+    { 
+        $group: { 
+            _id : "$entities.hashtags.text",
+            occurrences: {
+                $sum: 1
+            }
+        }
+    },
+    {
+        $sort: {
+            occurrences: -1 
+        }
+    },
+    {
+        $limit: 10
+    }
+])
 \end{lstlisting}
 
 \chapter{Tagebücher}
