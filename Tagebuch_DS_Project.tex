@@ -229,7 +229,7 @@ Damit können wir uns später besser einen Überblick verschaffen und gegebenfal
   \item \textbf{11.04.2017:} Testen der NLP Library http://www.spacy.io/
   \item \textbf{11.04.2017:} Erfolreiche Extrahierung von \textit{Named Entities} mit SpaCy aus Tweets
   \item \textbf{14.05.2017:} Interessante Studie, die ähnlich unserer ist: http://www.ling.uni-potsdam.de/~scheffler/twitter/
-  \item \textbf{15.05.2017:} Consumer sind jetzt per config.yml aktivierbar  
+  \item \textbf{24.05.2017:} Research über Darstellungsoptionen -> jQCloud, plotly.js
 \end{itemize}
 
 \subsection*{DataMiner}
@@ -240,14 +240,23 @@ Damit können wir uns später besser einen Überblick verschaffen und gegebenfal
   \item \textbf{08.05.2017:} Implementierung eines MongoDB Consumers, mit MongoDB lassen sich einfach JSON Objekte speichern und bei bedarf durchsuchen. Die Twitter API sendet Tweets im JSON Format, von daher erweist sich MongoDB als idealer initialer Datenspeicher.
   \item \textbf{14.05.2017:} Implementierung für den Locationfilter
   \item \textbf{14.05.2017:} Erstellung eines Shellscripts um den Twitter Client auf dem Server im Hintergrund laufen zu lassen
+  \item \textbf{15.05.2017:} Consumer sind jetzt per config.yml aktivierbar
   \item \textbf{16.05.2017:} Verbesserung des Twitter Clients und Unterschützung für mehrfache Locationfilter
   \item \textbf{18.05.2017:} Ich habe DataMining für Tweets in der Georegion Berlin um 03:15 gestarted.
 \end{itemize}
+
+\subsection*{Berechnung der Daten}
+  \item \textbf{24.05.2017:} Erstellung eine Spring Boot Web Service welche die Daten von der MongoDB berechnet und umformt. Erster algorythmus für most recent Tags (dauert bei großen Datenmengen 30 sec)
+  \item \textbf{25.05.2017:} Optimierung des "Most recent tag" - Algorythmus, wird jetzt von MongoDB berechnet mit MongoDb-Aggrigation-Framework und dauert nur noch 1 sec.
+
+\subsection*{Visualisierung}
+  \item \textbf{24.05.2017:} Einbinden der jQCloud auf meiner Internetseite und Upload von Testdata
 
 \subsection*{Server}
 
 \begin{itemize}
   \item \textbf{14.05.2017:} Upload des Twitter Clients auf den Server um einen Testlauf zu starten (Tweets in Berlin)
+  \item \textbf{25.05.2017:} Zwischen 21 und 23 Uhr kurzer Serverausfall
 \end{itemize}
 
 \end{document}
