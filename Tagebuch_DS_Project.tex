@@ -187,7 +187,7 @@ db.getCollection('tweetsGermanStopWords').aggregate([
 
 \subsection{Vorkommen aller Hashtags}
 \begin{lstlisting}[language=JavaScript]
-db.getCollection('tweetsBerlinGeo').aggregate([  
+db.tweetsBerlinGeo.aggregate([  
     { 
         $unwind: {
             path: "$entities.hashtags"
@@ -210,6 +210,47 @@ db.getCollection('tweetsBerlinGeo').aggregate([
         $limit: 10
     }
 ])
+\end{lstlisting}
+
+\subsection{Tweets pro Wochentag}
+\begin{lstlisting}[language=JavaScript]
+db.tweetsBerlinGeo.mapReduce(
+	/* map function */
+	function() {
+		var date = new Date(this.created_at)
+	  
+		emit(date.getHours(), 1);
+	},
+	/* reduce function */
+	function(key, values) {
+	  return Array.sum(values)
+	},
+	/* options */
+	{
+		query: {},
+		out: { inline: 1 }
+	}
+)
+\end{lstlisting}
+
+\subsection{Tweets pro Stunde}
+\begin{lstlisting}[language=JavaScript]
+db.tweetsBerlinGeo.mapReduce(
+	/* map function */
+	function() {
+		var date = new Date(this.created_at)
+		emit(date.getDay(), 1);
+	},
+	/* reduce function */
+	function(key, values) {
+	  return Array.sum(values)
+	},
+	/* options */
+	{
+		query: {},
+		out: { inline: 1 }
+	}
+)
 \end{lstlisting}
 
 \chapter{Tagebücher}
@@ -250,6 +291,7 @@ Damit können wir uns später besser einen Überblick verschaffen und gegebenfal
   \item \textbf{24.05.2017:} Erstellung eine Spring Boot Web Service welche die Daten von der MongoDB berechnet und umformt. Erster algorythmus für most recent Tags (dauert bei großen Datenmengen 30 sec)
   \item \textbf{25.05.2017:} Optimierung des "Most recent tag" - Algorythmus, wird jetzt von MongoDB berechnet mit MongoDb-Aggrigation-Framework und dauert nur noch 1 sec.
   \item \textbf{29.05.2017:} Implementierung zwei neuer Endpunkt. Tweets pro Stunde (0-23) und Tweets pro Wochentag (Montag-Sonntag)
+  \item \textbf{04.06.2017:} Arbeitet jetzt mit mongoDb mapReduce zur schnelleren Berechnung der Daten.
 
 \subsection*{Visualisierung}
   \item \textbf{24.05.2017:} Einbinden der jQCloud auf meiner Internetseite und Upload von Testdaten
