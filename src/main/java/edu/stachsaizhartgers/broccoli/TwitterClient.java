@@ -73,12 +73,12 @@ public class TwitterClient {
       final int SOUTH_WEST_LATITUDE = 1;
       final int NORTH_EAST_LONGITUDE = 2;
       final int NORTH_EAST_LATITUDE = 3;
-      float[][] rawLocations = config.getLocations();
+      List<List<Double>> rawLocations = config.getLocations();
       ArrayList<Location> locations = new ArrayList<>();
 
-      Stream.of(rawLocations).forEach((location) -> locations.add(new Location(
-        new Location.Coordinate(location[SOUTH_WEST_LONGITUDE], location[SOUTH_WEST_LATITUDE]),
-        new Location.Coordinate(location[NORTH_EAST_LONGITUDE], location[NORTH_EAST_LATITUDE])
+      rawLocations.forEach((location) -> locations.add(new Location(
+        new Location.Coordinate(location.get(SOUTH_WEST_LONGITUDE), location.get(SOUTH_WEST_LATITUDE)),
+        new Location.Coordinate(location.get(NORTH_EAST_LONGITUDE), location.get(NORTH_EAST_LATITUDE))
       )));
 
       endpoint.locations(locations);

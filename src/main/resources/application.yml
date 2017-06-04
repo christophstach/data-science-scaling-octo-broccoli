@@ -1,0 +1,20 @@
+consumer: [LogConsumer, MongoConsumer]
+api:
+  twitter:
+    # Possible values for filters are location, terms so far
+    filters: [location]
+    # [Southwest longitude, Southwest latitude, Northeast longitude, Northeast latitude]
+    # That are the bounding box coordinates of Berlin
+    locations:
+      - [13.118362, 52.38482, 13.729477, 52.718827]
+    auth-type: OAuth
+    terms-file:
+    auth:
+
+database:
+  file:
+  mongo:
+    host: localhost
+    port: 27017
+    database: twitter
+    collection: tweetsBerlinGeo

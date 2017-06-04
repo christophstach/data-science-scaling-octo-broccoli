@@ -6,21 +6,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.reactivex.functions.Consumer;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by Christoph Stach on 5/8/17.
  * <p>
- * ConsoleLogConsumer
+ * LogConsumer
  */
-public class ConsoleLogConsumer implements Consumer<String> {
+public class LogConsumer implements Consumer<String> {
   private ObjectMapper mapper;
+  private final static Logger logger = Logger.getLogger(LogConsumer.class.getName());
 
   /**
    * Setter constructor
    *
    * @param mapper value of mapper
    */
-  public ConsoleLogConsumer(ObjectMapper mapper) {
+  public LogConsumer(ObjectMapper mapper) {
     this.mapper = mapper;
     System.out.println("Created " + this.getClass().getName() + "...");
   }
@@ -30,11 +32,8 @@ public class ConsoleLogConsumer implements Consumer<String> {
     try {
       JsonNode json = mapper.readTree(s);
 
-      if(json.has("created_at")) {
-        System.out.println(
-          "[" + json.get("created_at").asText() + "]: "
-            + json.get("text").asText().replace("\n", "")
-        );
+      if (json.has("created_at")) {
+        logger.info(json.get("text").asText().replace("\n", ""));
       }
     } catch (IOException e) {
       System.out.println("Couldn't parse tweet JSON.");

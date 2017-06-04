@@ -1,4 +1,4 @@
-consumer: [MongoConsumer, ConsoleLogConsumer, FileConsumer]
+consumer: [MongoConsumer, LogConsumer, FileConsumer]
 api:
   twitter:
     # Possible values for filters are location, terms so far
