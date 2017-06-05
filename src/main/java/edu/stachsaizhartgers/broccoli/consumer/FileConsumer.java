@@ -5,6 +5,7 @@ import io.reactivex.functions.Consumer;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Created by Christoph Stach on 5/8/17.
@@ -14,6 +15,8 @@ import java.io.IOException;
 public class FileConsumer implements Consumer<String> {
   private File file;
   private FileWriter fileWriter;
+  private final static Logger logger = Logger.getLogger(FileConsumer.class.getName());
+
 
   /**
    * Setter constructor.
@@ -30,7 +33,7 @@ public class FileConsumer implements Consumer<String> {
       file.createNewFile();
     }
 
-    System.out.println("Created " + this.getClass().getName() + "...");
+    logger.info("Created " + this.getClass().getName() + "...");
   }
 
   @Override

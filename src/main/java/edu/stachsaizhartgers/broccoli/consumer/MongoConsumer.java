@@ -7,6 +7,10 @@ import edu.stachsaizhartgers.broccoli.config.MongoConfig;
 import io.reactivex.functions.Consumer;
 import org.bson.Document;
 
+import java.math.BigInteger;
+import java.util.Date;
+import java.util.logging.Logger;
+
 /**
  * Created by Christoph Stach on 5/4/17.
  * <p>
@@ -17,6 +21,7 @@ public class MongoConsumer implements Consumer<String> {
   private MongoClient client;
   private MongoDatabase database;
   private MongoCollection<Document> collection;
+  private final static Logger logger = Logger.getLogger(MongoConsumer.class.getName());
 
   /**
    * MongoConsumer needs a config for the MongoDb database
@@ -29,8 +34,8 @@ public class MongoConsumer implements Consumer<String> {
     database = client.getDatabase(config.getDatabase());
     collection = database.getCollection(config.getCollection());
 
-    System.out.println("Connection to MongoDB established.");
-    System.out.println("Created " + this.getClass().getName() + "...");
+    logger.info("Connection to MongoDB established.");
+    logger.info("Created " + this.getClass().getName() + "...");
   }
 
   /**
@@ -43,7 +48,12 @@ public class MongoConsumer implements Consumer<String> {
   @Override
   public void accept(String s) throws Exception {
     if(s.contains("created_at")) {
-      collection.insertOne(Document.parse(s));
+      Document doc = Document.parse(s);
+      long ts = Long.parseLong(doc.get("timestamp_ms").toString());
+
+      doc.append("created_at_date", new Date(ts));
+      doc.append("timestamp_ms_long", ts);
+      collection.insertOne(doc);
     }
   }
 }

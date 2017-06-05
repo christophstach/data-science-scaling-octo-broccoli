@@ -24,7 +24,7 @@ public class LogConsumer implements Consumer<String> {
    */
   public LogConsumer(ObjectMapper mapper) {
     this.mapper = mapper;
-    System.out.println("Created " + this.getClass().getName() + "...");
+    logger.info("Created " + this.getClass().getName() + "...");
   }
 
   @Override
@@ -36,7 +36,7 @@ public class LogConsumer implements Consumer<String> {
         logger.info(json.get("text").asText().replace("\n", ""));
       }
     } catch (IOException e) {
-      System.out.println("Couldn't parse tweet JSON.");
+      logger.warning("Couldn't parse tweet JSON.");
       e.printStackTrace();
     }
   }

@@ -2,8 +2,8 @@ package edu.stachsaizhartgers.broccoli;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.stachsaizhartgers.broccoli.config.AppConfig;
-import edu.stachsaizhartgers.broccoli.consumer.LogConsumer;
 import edu.stachsaizhartgers.broccoli.consumer.FileConsumer;
+import edu.stachsaizhartgers.broccoli.consumer.LogConsumer;
 import edu.stachsaizhartgers.broccoli.consumer.MongoConsumer;
 import io.reactivex.flowables.ConnectableFlowable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.util.stream.Stream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Christoph Stach on 4/27/17.
@@ -21,6 +22,8 @@ import java.util.stream.Stream;
  */
 @SpringBootApplication
 public class Application {
+  private final static Logger logger = Logger.getLogger(Application.class.getName());
+
   @Autowired
   private AppConfig appConfig;
 
@@ -45,8 +48,7 @@ public class Application {
    * @param e The exception
    */
   private void error(Throwable e) {
-    System.out.println(e + ": " + e.getMessage());
-    Stream.of(e.getStackTrace()).forEach(System.out::println);
+    logger.log(Level.WARNING, e.getMessage(), e);
   }
 
   /**
@@ -56,8 +58,6 @@ public class Application {
     try {
       TwitterClient twitterClient = new TwitterClient(appConfig.getApi().getTwitter());
       ConnectableFlowable<String> stream = twitterClient.listen();
-
-      System.out.println(appConfig.getApi().getTwitter().getAuth().getConsumerKey());
 
       for (String consumer : appConfig.getConsumer()) {
         switch (consumer) {
@@ -73,7 +73,6 @@ public class Application {
         }
       }
 
-      System.out.println();
       stream.connect();
     } catch (Throwable e) {
       e.printStackTrace();

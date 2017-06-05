@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.stream.Stream;
+import java.util.logging.Logger;
 
 /**
  * Created by Christoph Stach on 4/27/17.
@@ -36,6 +36,7 @@ public class TwitterClient {
   private TwitterConfig config;
   private Client client;
   private BlockingQueue<String> msgQueue;
+  private final static Logger logger = Logger.getLogger(TwitterClient.class.getName());
 
   /**
    * The twitter client needs a config object to define API keys and stuff.
@@ -118,10 +119,10 @@ public class TwitterClient {
    */
   public ConnectableFlowable<String> listen() throws InterruptedException {
     client.connect();
-    System.out.println("Connection to Twitter streaming api established.");
+    logger.info("Connection to Twitter streaming api established.");
 
     Flowable<String> stream = Flowable.create(subscriber -> new Thread(() -> {
-      System.out.println("Threaded tweet streaming started ...\n");
+      logger.info("Threaded tweet streaming started ...\n");
 
       while (!client.isDone()) {
         try {

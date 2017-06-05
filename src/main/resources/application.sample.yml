@@ -19,5 +19,5 @@ database:
   mongo:
     host: localhost
     port: 27017
-    database:
-    collection:
+    database: twitter
+    collection: tweetsBerlinGeo
