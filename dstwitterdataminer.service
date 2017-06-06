@@ -1,6 +1,7 @@
 [Unit]
 Description=A Service which starts a Spring Boot console application to data mine tweets from twitter.
-After=syslog.target mongodb.service
+Requires=mongod.service
+After=syslog.target mongod.service
 
 [Service]
 ExecStart=/var/dstwitterdataminer/data-science-scaling-octo-broccoli-1.0.0.jar
